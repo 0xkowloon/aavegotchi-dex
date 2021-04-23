@@ -1,25 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
+import { Gotchi, QueryResponse } from './types';
+import { request } from 'graphql-request';
 import './App.css';
 
+const uri = 'https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-core-matic';
+
 function App() {
+  const [gotchis, setGotchis] = useState<Array<Gotchi>>([]);
+  const fetchGotchis = async () => {
+    const query = `
+    {
+      aavegotchis(first: 100, orderBy: gotchiId) {
+        id
+        name
+        collateral
+        withSetsNumericTraits
+      }
+    }
+  `;
+
+    const response = await request<QueryResponse>(uri, query);
+    setGotchis(response.aavegotchis);
+  }
+
+  useEffect(() => {
+    fetchGotchis();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="container">
+        <div className="selected-container">
+        </div>
+        <div className="gotchi-list">
+        </div>
+      </div>
     </div>
+    // <div className="App">
+    //   {gotchis.map((gotchi, i) => {
+    //     return (
+    //       <p key={i}>{gotchi.name}</p>
+    //     )
+    //   })}
+    // </div>
   );
 }
 

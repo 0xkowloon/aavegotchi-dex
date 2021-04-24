@@ -27,6 +27,10 @@
   height: 100%;
 }
 
+.svg-container .gotchi-bg {
+  display: none;
+}
+
 .traits-container {
   padding: 0.4rem;
   background-color: white;

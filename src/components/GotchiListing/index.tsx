@@ -20,9 +20,9 @@ export const GotchiListing = ({
       <div className="collateral-container">
         <div className="collateral" style={{ backgroundColor: collateralColor }}>
         </div>
-        <p className="id">{id}</p>
-        <p className="name">{name}</p>
       </div>
+      <p className="id">{id}</p>
+      <p className="name">{name}</p>
     </div>
   );
 }
